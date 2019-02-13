@@ -1,12 +1,5 @@
 version: '3.3'
 services:
-
-  ####################################################################################
-  ####################################################################################
-  ###### SWARMPIT MONITORING
-  ####################################################################################
-  ####################################################################################
-
   app:
     image: swarmpit/swarmpit:1.6
     environment:
@@ -29,7 +22,6 @@ services:
       labels:
         - "traefik.port=8080"
         - "traefik.frontend.rule=Host:${SWARMPIT_HOSTNAME}"
-
   db:
     image: couchdb:2.3.0
     volumes:
@@ -44,7 +36,6 @@ services:
         reservations:
           cpus: '0.15'
           memory: 256M
-
   agent:
     image: swarmpit/agent:2.0
     environment:
@@ -62,12 +53,10 @@ services:
         reservations:
           cpus: '0.05'
           memory: 32M
-
 networks:
   traefiked:
     external:
       name: traefiked
-
 volumes:
   db-data:
     driver: local

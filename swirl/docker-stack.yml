@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+  swirl:
+    image: cuigh/swirl
+    environment:
+      DB_ADDRESS: mongo:27017/swirl
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - traefiked
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - "traefik.port=8001"
+        - "traefik.frontend.rule=Host:${SWIRL_HOSTNAME}"
+  mongo:
+    image: mongo
+    volumes:
+      - mongo:/data/db
+    networks:
+      - traefiked
+    deploy:
+      replicas: 1
+networks:
+  traefiked:
+    external:
+      name: traefiked
+volumes:
+  mongo:
+    driver: local

@@ -1,0 +1,15 @@
+version: '3.2'
+services:
+  whoami:
+    image: jwilder/whoami
+    networks:
+      - traefiked
+    deploy:
+      mode: global
+      labels:
+        - "traefik.port=8000"
+        - "traefik.frontend.rule=Host:${WHOAMI_HOSTNAME}"
+networks:
+  traefiked:
+    external:
+      name: traefiked
